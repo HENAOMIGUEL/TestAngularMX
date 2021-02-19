@@ -1,0 +1,144 @@
+<!-- Filter Datatables -->
+<section id="ngx-datatable-filter">
+    <div class="row">
+        <div class="col-12">
+            <!-- Filter starts -->
+            <div class="users-list-filter px-2">
+                <form>
+                    <div class="row border rounded py-2 mb-2 mx-n2">
+                        <div class="col-12 col-sm-6 col-lg-3">
+                            <label for="users-list-verified">STATUS</label>
+                            <fieldset class="form-group">
+                                <select id="users-list-verified" class="form-control">
+                                    <option value="">Todos</option>
+                                    <option value="active">Activo</option>
+                                    <option value="inactive">Inactivo</option>
+                                </select>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-lg-3">
+                            <label for="users-list-role">CREADO POR</label>
+                            <fieldset class="form-group">
+                                <select id="users-list-role" class="form-control">
+                                    <option value="">Any</option>
+                                    <option value="User">User</option>
+                                    <option value="Staff">Staff</option>
+                                </select>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-lg-3">
+                            <label for="users-list-status">ASIGNADO A</label>
+                            <fieldset class="form-group">
+                                <select id="users-list-status" class="form-control">
+                                    <option value="">Todos</option>
+                                </select>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-center">
+                            <button type="reset" class="btn btn-primary btn-block users-list-clear glow mb-0">
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Filter ends -->
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <fieldset class="form-group">
+                            <label>Cantidad a mostrar
+                                <select name="users-list-select"
+                                    class="form-control form-control-sm d-inline-block width-100 p-right-25 pl-4 mx-1" [(ngModel)]="pageSize">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                </select>
+                                </label>
+                            <label for="ngx-filter-ref" class="float-right">Search:
+                                <input id="ngx-filter-ref"
+                                    class="form-control form-control-sm d-inline-block width-200 ml-1" type="text" />
+                            </label>
+                        </fieldset>
+                        <!--TABLE INFORMATION-->
+
+                        <div class="table-responsive">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">CORPORATIVO</th>
+                                        <th scope="col">URL</th>
+                                        <th scope="col">INCORPORACIÓN</th>
+                                        <th scope="col">CREADO EL</th>
+                                        <th scope="col">ASIGNADO A</th>
+                                        <th scope="col">STATUS</th>
+                                        <th scope="col">ACCIONES</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let corporativa of corporativos | paginate: { itemsPerPage: pageSize, currentPage: page }" class="tr-table">
+                                        <div style="display: inline-flex;">
+                                            <div>
+                                                <img src="{{corporativa.S_LogoURL}}" class="img-circle rounded-circle" width="100" height="100">
+                                            </div>
+                                            <td>
+                                                <strong (click)="go(corporativa.id)" class="pointer">{{corporativa.S_NombreCorto}}</strong>
+                                                <br><label>{{corporativa.S_NombreCompleto}}</label>
+                                            </td>
+                                        </div>
+                                        <td><a href="https://devschoolcloud.com/sa/#/{{corporativa.S_SystemUrl}}" target="_blank">devschoolcloud.com/sa/#/{{corporativa.S_SystemUrl}}</a>
+                                        </td>
+                                        <td> {{corporativa.D_FechaIncorporacion | date: 'dd/MM/yyyy'}} </td>
+                                        <td>{{corporativa.created_at | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{corporativa.asignado.S_Nombre}}</td>
+                                        <td>
+                                            <span class="badge bg-success" *ngIf="corporativa.S_Activo==1">Activo</span>
+                                            <span class="badge btn-primary" *ngIf="corporativa.S_Activo==0">Inactivo</span>
+                                        </td>
+                                        <td>
+                                            <a class="ft-eye" style="margin: 0px 16px 35px; color: #1e46ae;" (click)="go(corporativa.id)"></a>
+                                            <a class="ft-check-circle"></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <pagination-controls style="text-align: center;" (pageChange)="page = $event" previousLabel="" nextLabel="">
+                            </pagination-controls>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Filter Datatables -->
+
+<!-- <button (click)="go()">sdfgsdf</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let corporativa of corporativos">
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+        </tr>
+        S
+    </tbody>
+</table> -->
